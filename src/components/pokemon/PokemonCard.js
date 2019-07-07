@@ -1,16 +1,33 @@
 import React, { Component } from "react";
+import {Link} from 'react-router-dom';
 import styled from "styled-components";
-import pokeball from './pokeball.gif'
+import pokeball from '../pokemon/pokeball.gif'
 
 const Sprite = styled.img`
   width: Sem;
   height: Sem;
+  display:none;
+  
 `;
+const Card =styled.div`
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  transittion: all 0.3s cubic-bezier(0.25,0.8,0.25,1);
+  &:hover{
+    box-shadow:0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+  }
+  -noz-user-select:none;
+  -website-ser-select:none;
+  user-select:none;
+  -o-user-select:none;
+`;
+
+ 
 export default class PokemonCard extends Component {
   state = {
     name: "",
     imageUrl: "",
     pokemonIndex: ""
+    
   };
 
   componentDidMount() {
@@ -27,7 +44,10 @@ export default class PokemonCard extends Component {
   render() {
     return (
       <div className="col-md-3 col-sm-6 mb-5">
-        <div className="card">
+      <Link to={`pokemon/${this.state.pokemonIndex}`} style={{
+        color:'black', textDecoration:'none'
+      }}>
+        <Card className="card">
           <h5 className="card-header"> {this.state.pokemonIndex} </h5>
           {/*
             This not working, Loading image is not showing 
@@ -36,7 +56,7 @@ export default class PokemonCard extends Component {
           {this.state.imageLoading ? (
             <img
               src={pokeball} 
-              style={{width: '5em', height: '5em'}}
+              style={{width: ' 5em', height: '5em'}}
               className="card-img-top rounded mx-auto d-block mt-2"
             />
           ): null }
@@ -64,7 +84,8 @@ export default class PokemonCard extends Component {
           <div className="card-body mx-auto">
             <h6 className="card-title capitalize "> {this.state.name} </h6>{" "}
           </div>
-        </div>
+        </Card>
+        </Link>
       </div>
     );
   }
