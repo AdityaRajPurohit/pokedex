@@ -3,11 +3,28 @@ import axios from 'axios';
 
 
 export default class Pokemon extends Component {
-    state={
-        name:'',
-        pokemonIndex:'',
-        imageUrl:'',
-
+    state = {
+        name: "",
+        pokemonIndex: "",
+        imageUrl: "",
+        types: [],
+        description: "",
+        state: {
+            hp: "",
+            attack: "",
+            defense: "",
+            speed: "",
+            specialAttack: "",
+            specialDefense: ""
+        },
+        height: "",
+        weight: "",
+        eggGroup: "",
+        abilities: "",
+        genderRatioMale: "",
+        genderRatioFemale: "",
+        evs: "",
+        hatchSteps: ""
     };
 
     async componentDidMount(){
