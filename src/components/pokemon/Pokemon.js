@@ -1,5 +1,17 @@
 import React, { Component } from "react";
 import axios from "axios";
+import styled from "styled-components";
+const Card =styled.div`
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  transittion: all 0.3s cubic-bezier(0.25,0.8,0.25,1);
+  &:hover{
+    box-shadow:0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+  }
+  -noz-user-select:none;
+  -website-ser-select:none;
+  user-select:none;
+  -o-user-select:none;
+`;
 
 const TYPE_COLORS = {
   bug: "B1C12E",
@@ -46,7 +58,8 @@ export default class Pokemon extends Component {
     evs: "",
     hatchSteps: ""
   };
-
+ 
+  
   async componentDidMount() {
     const { pokemonIndex } = this.props.match.params;
     //Url for pokemon infromation
@@ -97,13 +110,13 @@ export default class Pokemon extends Component {
 
     const evs = pokemonRes.data.stats
       .filter(stat => {
-        if (stat.efforts > 0) {
+        if (stat.effort > 0) {
           return true;
         }
         return false;
       })
       .map(stat => {
-        return `${stat.efforts} ${stat.stat.name}`
+        return `${stat.effort} ${stat.stat.name}`
           .toLowerCase()
           .split("-")
           .map(s => s.charAt(0).toUpperCase() + s.substring(1))
@@ -115,7 +128,7 @@ export default class Pokemon extends Component {
       let description = "";
       res.data.flavor_text_entries.some(flavor => {
         if (flavor.language.name === "en") {
-          description = flavor.flavour_text;
+          description = flavor.flavor_text;
           return;
         }
       });
@@ -167,7 +180,7 @@ export default class Pokemon extends Component {
     return (
       <div className="col">
         <div className="col">
-          <div className="card">
+          <Card className="card">
             <div className="card-header">
               <div className="row">
                 <div className="col-5">
@@ -242,7 +255,7 @@ export default class Pokemon extends Component {
                           role="progressBar"
                           style={{
                             width: `${this.state.stats.attack}%`,
-                            background:"#f3323d"
+                            background: "#f3323d"
                           }}>
                           <small
                             style={{
@@ -270,7 +283,7 @@ export default class Pokemon extends Component {
                           role="progressBar"
                           style={{
                             width: `${this.state.stats.defense}%`,
-                            background:"#00cd00"
+                            background: "#00cd00"
                           }}>
                           <small
                             style={{
@@ -299,7 +312,7 @@ export default class Pokemon extends Component {
                           role="progressBar"
                           style={{
                             width: `${this.state.stats.speed}%`,
-                            background:'#ff0033'
+                            background: '#ff0033'
                           }}>
                           <small
                             style={{
@@ -328,7 +341,7 @@ export default class Pokemon extends Component {
                           role="progressBar"
                           style={{
                             width: `${this.state.stats.specialDefense}%`,
-                            background:"#ff8000"
+                            background: "#ff8000"
                           }}
                         >
                           <small
@@ -342,10 +355,126 @@ export default class Pokemon extends Component {
                       </div>
                     </div>
                   </div>
+                  <hr />
+                </div>
+
+                <div className="row mt-1">
+                  <div className="col">
+                    <h4 className="p-2 font-weight-bold font-italic" align="center | justify ">{this.state.description}</h4>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
+            <hr />
+            <div className="card-body">
+              <h5 className="card-title text-center">Profile</h5>
+              <div className="row ">
+                <div className="col-md-6">
+                  <div className="row">
+                    <div className="col-6">
+                      <h6 className="float-right">Height:</h6>
+                    </div>
+
+                    <div className="col-6">
+                      <h6 className="float-left">{this.state.height} ft.</h6>
+                    </div>
+
+
+                    <div className="col-6">
+                      <h6 className="float-right">Weight:</h6>
+                    </div>
+
+
+                    <div className="col-6">
+                      <h6 className="float-left">{this.state.weight} Kg</h6>
+                    </div>
+
+                    <div className="col-6">
+                      <h6 className="float-right">Catch Rate:</h6>
+                    </div>
+
+
+                    <div className="col-6">
+                      <h6 className="float-left">{this.state.catchRate} %</h6>
+                    </div>
+
+                    <div className="col-6">
+                      <h6 className="float-right">Gender Ratio:</h6>
+                    </div>
+
+                    <div className="col-6">
+                      <div class="progress">
+                        <div
+                          class="progress-bar"
+                          role="progressbar"
+                          style={{
+                            width: `${this.state.genderRatioFemale}%`,
+                            backgroundColor: '#c2185b'
+                          }}
+                          aria-valuenow="15"
+                          aria-valuemin="0"
+                          aria-valuemax="100"
+                        >
+                          <small>{this.state.genderRatioFemale}</small>
+                        </div>
+                        <div
+                          class="progress-bar"
+                          role="progressbar"
+                          style={{
+                            width: `${this.state.genderRatioMale}%`,
+                            backgroundColor: '#1976d2'
+                          }}
+                          aria-valuenow="30"
+                          aria-valuemin="0"
+                          aria-valuemax="100"
+                        >
+                          <small>{this.state.genderRatioMale}</small>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="col-md-6">
+                  <div className="row">
+                    <div className="col-6">
+                      <h6 className="float-right">Egg Group:</h6>
+                    </div>
+
+                    <div className="col-6">
+                      <h6 className="float-left">{this.state.eggGroup}</h6>
+                    </div>
+
+
+                    <div className="col-6">
+                      <h6 className="float-right">Hatch Steps:</h6>
+                    </div>
+
+                    <div className="col-6">
+                      <h6 className="float-left">{this.state.hatchSteps}</h6>
+                    </div>
+
+                    <div className="col-6">
+                      <h6 className="float-right">Abilities:</h6>
+                    </div>
+
+                    <div className="col-6">
+                      <h6 className="float-left">{this.state.abilities}</h6>
+                    </div>
+
+                    <div className="col-6">
+                      <h6 className="float-right">EVS:</h6>
+                    </div>
+
+                    <div className="col-6">
+                      <h6 className="float-left">{this.state.evs}</h6>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </Card>
         </div>
       </div>
     );

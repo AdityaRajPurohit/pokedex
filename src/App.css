@@ -13,3 +13,7 @@
 .navbar {
   background-color: #ef5350 !important;
 }
+
+h4{
+  text-shadow: 2px 2px whitesmoke;
+}
